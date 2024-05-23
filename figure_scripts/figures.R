@@ -1,60 +1,96 @@
 rm(list=ls())
-source(here::here("0_config.R"))
+library(here)
+library(tidyverse)
 library(cowplot)
 library(patchwork)
 
+theme_ki <- function(){
+  theme_bw() %+replace%
+    theme(
+      strip.background = element_blank(),
+      legend.position="none",
+      plot.title = element_text(size = 16, face = "bold"),
+      strip.text = element_text(size=14),
+      axis.title = element_text(size=12),
+      axis.text.y = element_text(size=10),
+      axis.text.x = element_text(size=10, angle = 0, hjust = 0.5, vjust=.1)
+    )
+}
+
 #load spline data
-H1_spline <- readRDS(here("figure-data/H1_adj_spline.data.RDS"))
+H1_laz_spline <- readRDS(here("figure-data/H1_adj_spline.data.RDS"))
+H1_whz_spline <- readRDS(here("figure-data/H1_adj_whz_spline.data.RDS"))
+H1_igf_spline <- readRDS(here("figure-data/H1_igf_adj_spline.data.RDS"))
+H1_spline <- bind_rows(H1_laz_spline, H1_whz_spline, H1_igf_spline)
+
 H2_spline <- readRDS(here("figure-data/H2_adj_spline.data.RDS"))
 H3_spline <- readRDS(here("figure-data/H3_adj_spline.data.RDS"))
 H4_spline <- readRDS(here("figure-data/H4_adj_spline.data.RDS"))
 
 #load results for quartiles
-H1_quartiles <- readRDS(here("results/adjusted/H1_adj_res.RDS"))
+H1_laz_quart <- readRDS(here("results/adjusted/H1_adj_res.RDS"))
+H1_whz_quart <- readRDS(here("results/adjusted/H1_whz_adj_res.RDS"))
+H1_igf_quart <- readRDS(here("results/adjusted/H1_igf_adj_res.RDS"))
+H1_quartiles <- bind_rows(H1_laz_quart, H1_whz_quart, H1_igf_quart)
+
 H2_quartiles <- readRDS(here("results/adjusted/H2_adj_res.RDS"))
 H3_quartiles <- readRDS(here("results/adjusted/H3_adj_res.RDS"))
 H4_quartiles <- readRDS(here("results/adjusted/H4_adj_res.RDS"))
-H12_spline <- readRDS(here("figure-data/emm_tr_adj_spline.data.RDS"))
-H12_quartiles <- readRDS(here("results/adjusted/emm_tr_adj_res.RDS"))
-
-d_for_plot <- function(x_name, y_name, x_var, y_var, spline, quart){
-  d <- NULL
-  for (i in 1: length(x_var)) {
-    for (j in 1:length(y_var)){
-      exists <- (quart%>%filter(X==x_var[i], Y==y_var[j]) %>% nrow()) != 0
-      if (exists){
-        print(quart%>%filter(X==x_var[i], Y==y_var[j]))
-        new <- data.frame(x=x_name[i], y=y_name[j], quart%>%filter(X==x_var[i], Y==y_var[j]))
-        d <- rbind(d, new)
-      }
-    }
-  }
-  d
-}
 
 
-d1 <- d_for_plot(c("ln Maternal Plasma Cortisol"), 
-                 c("Child LAZ 3-Month", "Child LAZ 14-Month", "Child LAZ 28-month"), 
-                 c("ln_preg_cort"),
-                 c("laz_t1", "laz_t2", "laz_t3"),
-                 H1_spline, H1_quartiles) 
+# d_for_plot <- function(x_name, y_name, x_var, y_var, spline, quart){
+#   d <- NULL
+#   for (i in 1: length(x_var)) {
+#     for (j in 1:length(y_var)){
+#       exists <- (quart%>%filter(X==x_var[i], Y==y_var[j]) %>% nrow()) != 0
+#       if (exists){
+#         print(quart%>%filter(X==x_var[i], Y==y_var[j]))
+#         new <- data.frame(x=x_name[i], y=y_name[j], quart%>%filter(X==x_var[i], Y==y_var[j]))
+#         d <- rbind(d, new)
+#       }
+#     }
+#   }
+#   d
+# }
+# 
+# d1 <- d_for_plot(c("ln Maternal Plasma Cortisol"), 
+#                  c("Child LAZ 3-Month", "Child LAZ 14-Month", "Child LAZ 28-month"), 
+#                  c("ln_preg_cort"),
+#                  c("laz_t1", "laz_t2", "laz_t3", "whz_t1", "whz_t2", "whz_t3", "igf1_t1", "igf1_t2", "igf1_t3"),
+#                  H1_spline, H1_quartiles) 
+
+d1 <- H1_quartiles %>% 
+  # filter(Y %in% c("laz_t1", "laz_t2", "laz_t3", "whz_t1", "whz_t2", "whz_t3", "igf_t1", "igf_t2", "igf_t3"),
+  #        X=="ln_preg_cort") %>%
+  mutate(x="ln Maternal Plasma Cortisol", 
+         y=case_when(grepl("t1",Y) ~ "Child age 3 Months",
+                     grepl("t2",Y) ~ "Child age 14 Months",
+                     grepl("t3",Y) ~ "Child age 28 Months"),
+         y=factor(y, levels=c("Child age 3 Months", "Child age 14 Months", "Child age 28 Months")),
+         Outcome=case_when(grepl("laz",Y) ~ "LAZ",
+                           grepl("whz",Y) ~ "WHZ",
+                           grepl("igf",Y) ~ "IGF-1"))
+            
 
 #d1$x <- factor(d1$x,levels=c("Vitamin D", "Vitamin D deficiency", "Ln RBP", "Vitamin A deficiency","Ln ferritin", "Ln sTfR", "Iron deficiency"))
 #d1$x <- factor(d1$x, levels=rev(levels(d1$x)))
-d1$y <- factor(d1$y)
-d1$`Time of outcome measurement` <- factor(ifelse(grepl("t3", d1$Y), "Age 28 months", "Age 14 months"))
+# d1$y <- factor(d1$y)
+# d1$`Time of outcome measurement` <- factor(ifelse(grepl("t3", d1$Y), "Age 28 months", "Age 14 months"))
 
+tableau10 <- c("#4E79A7", "#F28E2B", "#E15759", "#76B7B2", "#59A14F", 
+               "#EDC948", "#B07AA1", "#FF9DA7", "#9C755F", "#BAB0AC")
 p <- ggplot(d1, aes(x=x, y=point.diff)) + 
-  geom_pointrange(aes(ymin=lb.diff , ymax=ub.diff, color=X, shape=`Time of outcome measurement`),
+  geom_pointrange(aes(ymin=lb.diff , ymax=ub.diff, color=Outcome, shape=Outcome, group=Outcome),
                   position = position_dodge2(width = 0.5),
                   size = 1, show.legend = T) +
-  facet_grid(rows=vars(y), scales = "free") + 
-  labs(y = "Adjusted difference in mean child immune status outcome\nbetween 25th and 75th percentile of maternal exposure", 
+  #facet_grid(rows=vars(y), scales = "free") + 
+  facet_grid(rows=vars(y)) + 
+  labs(y = "Adjusted difference in mean child growth status outcome\nbetween 25th and 75th percentile of maternal exposure", 
        x="Maternal micronutrient exposure") +
   geom_hline(yintercept = 0, linetype="dashed") +
-  scale_shape_manual(breaks=c("Age 14 months","Age 28 months"), values=c(21,16)) +
+  #scale_shape_manual(breaks=c("Age 3 months","Age 14 months","Age 28 months"), values=c(21,16)) +
   guides(color="none")+
-  scale_color_manual(values = tableau10[c(7:1)]) + 
+  scale_color_manual(values = tableau10[c(1:3)]) + 
   theme_ki() +
   theme(plot.title = element_text(hjust = 0),
         axis.title.x = element_text(size=11),

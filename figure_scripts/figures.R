@@ -63,13 +63,14 @@ d1 <- H1_quartiles %>%
   # filter(Y %in% c("laz_t1", "laz_t2", "laz_t3", "whz_t1", "whz_t2", "whz_t3", "igf_t1", "igf_t2", "igf_t3"),
   #        X=="ln_preg_cort") %>%
   mutate(x="ln Maternal Plasma Cortisol", 
-         y=case_when(grepl("t1",Y) ~ "Child age 3 Months",
-                     grepl("t2",Y) ~ "Child age 14 Months",
-                     grepl("t3",Y) ~ "Child age 28 Months"),
-         y=factor(y, levels=c("Child age 3 Months", "Child age 14 Months", "Child age 28 Months")),
+         y=case_when(grepl("t1",Y) ~ "3 Months",
+                     grepl("t2",Y) ~ "14 Months",
+                     grepl("t3",Y) ~ "28 Months"),
+         y=factor(y, levels=c("3 Months", "14 Months", "28 Months")),
          Outcome=case_when(grepl("laz",Y) ~ "LAZ",
-                           grepl("whz",Y) ~ "WHZ",
-                           grepl("igf",Y) ~ "IGF-1"))
+                           grepl("whz",Y) ~ "WLZ",
+                           grepl("igf",Y) ~ "IGF-1"),
+         Outcome=factor(Outcome, levels=c("LAZ", "WLZ", "IGF-1")))
             
 
 #d1$x <- factor(d1$x,levels=c("Vitamin D", "Vitamin D deficiency", "Ln RBP", "Vitamin A deficiency","Ln ferritin", "Ln sTfR", "Iron deficiency"))
@@ -79,14 +80,14 @@ d1 <- H1_quartiles %>%
 
 tableau10 <- c("#4E79A7", "#F28E2B", "#E15759", "#76B7B2", "#59A14F", 
                "#EDC948", "#B07AA1", "#FF9DA7", "#9C755F", "#BAB0AC")
-p <- ggplot(d1, aes(x=x, y=point.diff)) + 
-  geom_pointrange(aes(ymin=lb.diff , ymax=ub.diff, color=Outcome, shape=Outcome, group=Outcome),
+p <- ggplot(d1, aes(x=y, y=point.diff)) + 
+  geom_pointrange(aes(ymin=lb.diff , ymax=ub.diff, color=y),
                   position = position_dodge2(width = 0.5),
                   size = 1, show.legend = T) +
   #facet_grid(rows=vars(y), scales = "free") + 
-  facet_grid(rows=vars(y)) + 
+  facet_grid(vars(Outcome), scales = "free") + 
   labs(y = "Adjusted difference in mean child growth status outcome\nbetween 25th and 75th percentile of maternal exposure", 
-       x="Maternal micronutrient exposure") +
+       x="Child age") +
   geom_hline(yintercept = 0, linetype="dashed") +
   #scale_shape_manual(breaks=c("Age 3 months","Age 14 months","Age 28 months"), values=c(21,16)) +
   guides(color="none")+
@@ -98,11 +99,11 @@ p <- ggplot(d1, aes(x=x, y=point.diff)) +
         strip.placement = "outside",
         axis.text.y = element_text(hjust = 1, size=9),
         panel.spacing = unit(0.5, "lines"),
-        legend.position = "bottom")      
+        legend.position = "none")      
 p
 
 
-p %>% ggsave(filename="figures/pregnancy-immune_point_diff_micronutrients-hypo1.jpg", width=10, height=7)
+p %>% ggsave(filename="figures/pregnancy-immune_point_diff_micronutrients-hypo1.jpg", width=6, height=5)
 
 
 d1 <- d_for_plot(c("CRP", "AGP", "plasma 13-cytokine sum score"), 

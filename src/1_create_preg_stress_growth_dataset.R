@@ -9,8 +9,15 @@ rm(list=ls())
 #updated_pregnancy <- box_read(845078269128)
 
 # read in data 
-d <- readRDS("./stress_growth.RDS")
-names(d)
+#d <- readRDS("./stress_growth.RDS")
+d <- readRDS("C:/Users/andre/Documents//EE/eed-substudy-data/bangladesh-cleaned-master-data.RDS")
+
+table(d$vit_A_def)
+summary(d$logFERR)
+summary(d$logFERR_inf)
+
+
+
 #dfull <- readRDS("./stress_growth.RDS")
 
 # select variables/columns of interest 

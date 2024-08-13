@@ -21,6 +21,7 @@ library(here)
 library(cowplot)
 library(mgcv)
 library(psych)
+library(faraway)
 
 if(!require(washbgam)){
   devtools::install_github("washb-eed-substudies/washbgam")
@@ -43,12 +44,13 @@ if(dir.exists("/Users/lisa/Dropbox/WASH/")){
 
 
 d <-NULL
-d <- try(readRDS("C:/Users/andre/Documents/EE/eed-substudy-data/bangladesh-cleaned-master-data.RDS") %>% filter(pregnancy_stress==1))
-if(is.null(d)){
-  library(boxr)
-  box_auth() 
-  d <- box_read(871638120165) %>% filter(pregnancy_stress==1) # change to pregnancy-stress
-}
+d <- try(readRDS("/Users/belindachen/Documents/pregnancy-stress-growth/data/bangladesh-cleaned-master-data.RDS") %>% filter(pregnancy_stress==1))
+# if(is.null(d)) {
+#  library(boxr)
+#  box_auth() 
+#  d <- box_read(871638120165) %>% filter(pregnancy_stress==1) # change to pregnancy-stress
+# }
+
 
 
 theme_ki<-function(){

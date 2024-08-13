@@ -4,7 +4,7 @@ rm(list=ls())
 
 #d<-readRDS(paste0(dropboxDir, "Data/Cleaned/Audrie/pregnancy_child_immune_covariates_data.RDS"))
 
-d <- readRDS("../pregnancy_stress_growth_covariates_data.RDS")
+d <- readRDS("./sec_outcomes_covariates.RDS")
 
 names(d)
 
@@ -14,10 +14,9 @@ names(d)
 #Maternal plasma cortisol is inversely associated with child growth 
 
 # X: maternal plasma cortisol - first & second trimester of pregnancy
-# Y: child LAZ at 3, 14, 28 months, stunting 
+# Y: child WHZ at 3, 14, 28 months, stunting 
 Xvars <- c("ln_preg_cort")
-Yvars <- c("laz_t1", "laz_t2", "laz_t3")
-
+Yvars <- c("igf_t2", "igf_t3")
 
 #Fit models
 H1_models <- NULL
@@ -53,26 +52,26 @@ for(i in 1:nrow(H1_models)){
 
 
 #Save models
-saveRDS(H1_models, ("../models/H1_models.RDS"))
+saveRDS(H1_models, ("./models/H1_igf_models.RDS"))
 
 #Save results
-saveRDS(H1_res, ("../results/unadjusted/H1_res.RDS"))
+saveRDS(H1_res, ("./results/unadjusted/H1_igf_res.RDS"))
 
 
 #Save plots
 #saveRDS(H1_plot_list, here("figure-objects/H1_unadj_splines.RDS"))
 
 #Save plot data
-saveRDS(H1_plot_data, ("../figure-data/H1_unadj_spline_data.RDS"))
+saveRDS(H1_plot_data, ("./figure-data/H1_igf_unadj_spline_data.RDS"))
 
 
 
 ## Hypothesis 2
 # Maternal inflammation is inversely associated with in-utero and post-natal growth in children
 # X: CRP, AGP, plasma 13-cytokine sum score in first & second trimester of pregnancy 
-# Y: child LAZ at 3, 14, 28 month, stunting 
+# Y: child WHZ at 3, 14, 28 month, stunting 
 Xvars <- c("logCRP", "logAGP", "sumscore_t0_mom_Z")            
-Yvars <- c("laz_t1", "laz_t2", "laz_t3")
+Yvars <- c("igf_t2", "igf_t3")
 
 #Fit models
 H2_models <- NULL
@@ -104,24 +103,26 @@ for(i in 1:nrow(H2_models)){
 
 
 #Save models
-saveRDS(H2_models, ("../models/H2_models.RDS"))
+saveRDS(H2_models, ("./models/H2_igf_models.RDS"))
 
 #Save results
-saveRDS(H2_res, ("../results/unadjusted/H2_res.RDS"))
+saveRDS(H2_res, ("./results/unadjusted/H2_igf_res.RDS"))
 
 
 #Save plots
 #saveRDS(H2_plot_list, here("figure-objects/H2_unadj_splines.RDS"))
 
 #Save plot data
-saveRDS(H2_plot_data, ("../figure-data/H2_unadj_spline_data.RDS"))
+saveRDS(H2_plot_data, ("./figure-data/H2_igf_unadj_spline_data.RDS"))
 
-## Hypothesis 3
-# Maternal nutrition is positively associated with child attained growth 
-# X: Vitamin D, ferritin, soluble transferrin receptor (sTfR) in first & second trimester of pregnancy 
-# Y: child LAZ at 3, 14, 28 month, stunting 
-Xvars <- c("vitD_nmol_per_L", "logSTFR_inf", "logRBP_inf")            
-Yvars <- c("laz_t1", "laz_t2", "laz_t3")
+##Hypothesis 3
+#Maternal nutrition is positively associated with child attained growth 
+
+# X: Vitamin D, ferritin, soluble transferrin receptor (sTfR), Vitamin A deficiency in first or second trimester 
+# Y: child WHZ at 3, 14, 28 months, stunting 
+Xvars <- c("logRBP_inf", "logSTFR_inf", "vitD_nmol_per_L")
+Yvars <- c("igf_t2", "igf_t3")
+
 
 #Fit models
 H3_models <- NULL
@@ -137,7 +138,11 @@ for(i in Xvars){
 H3_res <- NULL
 for(i in 1:nrow(H3_models)){
   res <- data.frame(X=H3_models$X[i], Y=H3_models$Y[i])
-  preds <- predict_gam_diff(fit=H3_models$fit[i][[1]], d=H3_models$dat[i][[1]], quantile_diff=c(0.25,0.75), Xvar=res$X, Yvar=res$Y)
+  if(grepl("_def", H3_models$X[i])){
+    preds <- predict_gam_diff(fit=H3_models$fit[i][[1]], d=H3_models$dat[i][[1]], quantile_diff=c(0.25,0.75), Xvar=res$X, Yvar=res$Y, binary=T)
+  }else{
+    preds <- predict_gam_diff(fit=H3_models$fit[i][[1]], d=H3_models$dat[i][[1]], quantile_diff=c(0.25,0.75), Xvar=res$X, Yvar=res$Y)
+  }
   H3_res <-  bind_rows(H3_res , preds$res)
 }
 
@@ -153,17 +158,17 @@ for(i in 1:nrow(H3_models)){
 
 
 #Save models
-saveRDS(H3_models, ("../models/H3_models.RDS"))
+saveRDS(H3_models, ("./models/H3_igf_models.RDS"))
 
 #Save results
-saveRDS(H3_res, ("../results/unadjusted/H3_res.RDS"))
+saveRDS(H3_res, ("./results/unadjusted/H3_igf_res.RDS"))
 
 
 #Save plots
-#saveRDS(H2_plot_list, here("figure-objects/H2_unadj_splines.RDS"))
+#saveRDS(H3_plot_list, here("figure-objects/H3_unadj_splines.RDS"))
 
 #Save plot data
-saveRDS(H3_plot_data, ("../figure-data/H3_unadj_spline_data.RDS"))
+saveRDS(H3_plot_data, ("./figure-data/H3_igf_unadj_spline_data.RDS"))
 
 ##Hypothesis 4
 #Maternal estriol is positively associated with child attained growth 
@@ -171,7 +176,7 @@ saveRDS(H3_plot_data, ("../figure-data/H3_unadj_spline_data.RDS"))
 # X: Maternal estriol in first or second trimester 
 # Y: child WHZ at 3, 14, 28 months, stunting 
 Xvars <- c("ln_preg_estri")
-Yvars <- c("laz_t1", "laz_t2", "laz_t3")
+Yvars <- c("igf_t2", "igf_t3")
 
 
 #Fit models
@@ -208,16 +213,17 @@ for(i in 1:nrow(H4_models)){
 
 
 #Save models
-saveRDS(H4_models, ("../models/H4_models.RDS"))
+saveRDS(H4_models, ("./models/H4_igf_models.RDS"))
 
 #Save results
-saveRDS(H4_res, ("../results/unadjusted/H4_res.RDS"))
+saveRDS(H4_res, ("./results/unadjusted/H4_igf_res.RDS"))
 
 
 #Save plots
 #saveRDS(H3_plot_list, here("figure-objects/H3_unadj_splines.RDS"))
 
 #Save plot data
-saveRDS(H4_plot_data, ("../figure-data/H4_unadj_spline_data.RDS"))
+saveRDS(H4_plot_data, ("./figure-data/H4_igf_unadj_spline_data.RDS"))
+
 
 

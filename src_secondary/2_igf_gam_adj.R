@@ -1,10 +1,10 @@
 rm(list=ls())
-librqry(washbgam)
-#source(here::here("0-config.R"))
+
+#source(here::(../0-config.R"))
 
 #d<-readRDS(paste0(dropboxDir, "Data/Cleaned/Audrie/pregnancy_child_immune_covariates_data.RDS"))
 
-d <- readRDS("../pregnancy_stress_growth_covariates_data.RDS")
+d <- readRDS("./sec_outcomes_covariates.RDS")
 #Set list of adjustment variables
 #Make vectors of adjustment variable names
 Wvars<-c("sex","birthord", "momage","momheight","momedu", 
@@ -36,7 +36,7 @@ pick_covariates <- function(j){
 # X: maternal plasma cortisol - first & second trimester of pregnancy
 # Y: child LAZ at 3, 14, 28 months, stunting 
 Xvars <- c("ln_preg_cort")
-Yvars <- c("laz_t1", "laz_t2", "laz_t3")
+Yvars <- c("igf_t2", "igf_t3")
 
 #Fit models
 H1_adj_models <- NULL
@@ -80,14 +80,14 @@ for(i in 1:nrow(H1_adj_models)){
 #saveRDS(H1_adj_models, paste0(dropboxDir,"results/stress-growth-models/models/H1_adj_models.RDS"))
 
 #Save results
-saveRDS(H1_adj_res, ("../results/adjusted/H1_adj_res.RDS"))
+saveRDS(H1_adj_res, ("./results/adjusted/H1_igf_adj_res.RDS"))
 
 
 #Save plots
 #saveRDS(H1_adj_plot_list, paste0(dropboxDir,"results/stress-growth-models/figure-objects/H1_adj_splines.RDS"))
 
 #Save plot data
-saveRDS(H1_adj_plot_data, ("../figure-data/H1_adj_spline.data.RDS"))
+saveRDS(H1_adj_plot_data, ("./figure-data/H1_igf_adj_spline.data.RDS"))
 
 
 ## Hypothesis 2
@@ -95,7 +95,7 @@ saveRDS(H1_adj_plot_data, ("../figure-data/H1_adj_spline.data.RDS"))
 # X: CRP, AGP, plasma 13-cytokine sum score in first & second trimester of pregnancy 
 # Y: child LAZ at 3, 14, 28 month, stunting 
 Xvars <- c("logCRP", "logAGP", "sumscore_t0_mom_Z")   
-Yvars <- c("laz_t1", "laz_t2", "laz_t3")
+Yvars <- c("igf_t2", "igf_t3")
 
 #Fit models
 H2_adj_models <- NULL
@@ -133,20 +133,20 @@ for(i in 1:nrow(H2_adj_models)){
 #saveRDS(H2_adj_models, paste0(dropboxDir,"results/stress-growth-models/models/adj_H2_adj_models.RDS"))
 
 #Save results
-saveRDS(H2_adj_res, here("results/adjusted/H2_adj_res.RDS"))
+saveRDS(H2_adj_res, ("./results/adjusted/H2_igf_adj_res.RDS"))
 
 
 #Save plots
 #saveRDS(H2_adj_plot_list, paste0(dropboxDir,"results/stress-growth-models/figure-objects/H2_adj_adj_splines.RDS"))
 
 #Save plot data
-saveRDS(H2_adj_plot_data, here("figure-data/H2_adj_spline.data.RDS"))
+saveRDS(H2_adj_plot_data, ("./figure-data/H2_igf_adj_spline.data.RDS"))
 
 
 ##Hypothesis 3
 #Maternal nutrition is negatively associated with child growth
 Xvars <- c("vitD_nmol_per_L", "logSTFR_inf", "logRBP_inf")            
-Yvars <- c("laz_t1", "laz_t2", "laz_t3")
+Yvars <- c("igf_t2", "igf_t3")
 
 
 #Fit models
@@ -191,21 +191,21 @@ for(i in 1:nrow(H3_adj_models)){
 #saveRDS(H1_adj_models, paste0(dropboxDir,"results/stress-growth-models/models/H1_adj_models.RDS"))
 
 #Save results
-saveRDS(H3_adj_res, here("results/adjusted/H3_adj_res.RDS"))
+saveRDS(H3_adj_res, ("./results/adjusted/H3_igf_adj_res.RDS"))
 
 
 #Save plots
 #saveRDS(H1_adj_plot_list, paste0(dropboxDir,"results/stress-growth-models/figure-objects/H1_adj_splines.RDS"))
 
 #Save plot data
-saveRDS(H3_adj_plot_data, here("figure-data/H3_adj_spline.data.RDS"))
+saveRDS(H3_adj_plot_data, ("./figure-data/H3_igf_adj_spline.data.RDS"))
 
 ## Hypothesis 4
 # Maternal estriol is positively associated with child growth.
 # X: maternal plasma estriol  - first & second trimester of pregnancy
 # Y: child LAZ at 3, 14, 28 months, stunting 
 Xvars <- c("ln_preg_estri")
-Yvars <- c("laz_t1", "laz_t2", "laz_t3")
+Yvars <- c("igf_t2", "igf_t3")
 
 #Fit models
 H4_adj_models <- NULL
@@ -249,12 +249,12 @@ for(i in 1:nrow(H4_adj_models)){
 #saveRDS(H1_adj_models, paste0(dropboxDir,"results/stress-growth-models/models/H1_adj_models.RDS"))
 
 #Save results
-saveRDS(H4_adj_res, here("results/adjusted/H4_adj_res.RDS"))
+saveRDS(H4_adj_res, ("./results/adjusted/H4_igf_adj_res.RDS"))
 
 
 #Save plots
 #saveRDS(H1_adj_plot_list, paste0(dropboxDir,"results/stress-growth-models/figure-objects/H1_adj_splines.RDS"))
 
 #Save plot data
-saveRDS(H4_adj_plot_data, ("../figure-data/H4_adj_spline.data.RDS"))
+saveRDS(H4_adj_plot_data, ("./figure-data/H4_igf_adj_spline.data.RDS"))
 

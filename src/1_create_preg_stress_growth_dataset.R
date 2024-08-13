@@ -10,7 +10,7 @@ rm(list=ls())
 
 # read in data 
 #d <- readRDS("./stress_growth.RDS")
-d <- readRDS("C:/Users/andre/Documents//EE/eed-substudy-data/bangladesh-cleaned-master-data.RDS")
+d <- readRDS("data/bangladesh-cleaned-master-data.RDS")
 
 table(d$vit_A_def)
 summary(d$logFERR)

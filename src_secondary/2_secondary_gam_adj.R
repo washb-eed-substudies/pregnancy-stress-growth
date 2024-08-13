@@ -1,6 +1,6 @@
 rm(list=ls())
 
-#source(here::here("0-config.R"))
+#source(here::("./0-config.R"))
 
 #d<-readRDS(paste0(dropboxDir, "Data/Cleaned/Audrie/pregnancy_child_immune_covariates_data.RDS"))
 
@@ -44,13 +44,12 @@ for(i in Xvars){
   for(j in Yvars){
     print(i)
     print(j)
-    Wset<-pick_covariates(j)
-    res_adj <- fit_RE_gam(d=d, X=i, Y=j,  W=Wset, forcedW = NULL)
+    Wset<-c(pick_covariates(j), "time_of_day_cort_cont")
+    res_adj <- fit_RE_gam(d=d, X=i, Y=j,  W=Wset, forcedW = c("time_of_day_cort_cont"))
     res <- data.frame(X=i, Y=j, fit=I(list(res_adj$fit)), dat=I(list(res_adj$dat)))
     H1_adj_models <- bind_rows(H1_adj_models, res)
   }
 }
-
 
 
 #Get primary contrasts
@@ -80,14 +79,14 @@ for(i in 1:nrow(H1_adj_models)){
 #saveRDS(H1_adj_models, paste0(dropboxDir,"results/stress-growth-models/models/H1_adj_models.RDS"))
 
 #Save results
-saveRDS(H1_adj_res, here("results/adjusted/H12_whz_adj_res.RDS"))
+saveRDS(H1_adj_res, ("./results/adjusted/H1_whz_adj_res.RDS"))
 
 
 #Save plots
 #saveRDS(H1_adj_plot_list, paste0(dropboxDir,"results/stress-growth-models/figure-objects/H1_adj_splines.RDS"))
 
 #Save plot data
-saveRDS(H1_adj_plot_data, here("figure-data/H1_adj_whz_spline.data.RDS"))
+saveRDS(H1_adj_plot_data, ("./figure-data/H1_adj_whz_spline.data.RDS"))
 
 
 ## Hypothesis 2
@@ -133,20 +132,20 @@ for(i in 1:nrow(H2_adj_models)){
 #saveRDS(H2_adj_models, paste0(dropboxDir,"results/stress-growth-models/models/adj_H2_adj_models.RDS"))
 
 #Save results
-saveRDS(H2_adj_res, here("results/adjusted/H2_adj_res.RDS"))
+saveRDS(H2_adj_res, ("./results/adjusted/H2_whz_adj_res.RDS"))
 
 
 #Save plots
 #saveRDS(H2_adj_plot_list, paste0(dropboxDir,"results/stress-growth-models/figure-objects/H2_adj_adj_splines.RDS"))
 
 #Save plot data
-saveRDS(H2_adj_plot_data, here("figure-data/H2_adj_spline.data.RDS"))
+saveRDS(H2_adj_plot_data, ("./figure-data/H2_whz_adj_spline.data.RDS"))
 
 
 ##Hypothesis 3
 #Maternal nutrition is negatively associated with child growth
 Xvars <- c("vitD_nmol_per_L", "logSTFR_inf", "logRBP_inf")            
-Yvars <- c("laz_t1", "laz_t2", "laz_t3")
+Yvars <- c("whz_t1", "whz_t2", "whz_t3")
 
 
 #Fit models
@@ -191,21 +190,21 @@ for(i in 1:nrow(H3_adj_models)){
 #saveRDS(H1_adj_models, paste0(dropboxDir,"results/stress-growth-models/models/H1_adj_models.RDS"))
 
 #Save results
-saveRDS(H3_adj_res, here("results/adjusted/H3_adj_res.RDS"))
+saveRDS(H3_adj_res, ("./results/adjusted/H3_whz_adj_res.RDS"))
 
 
 #Save plots
 #saveRDS(H1_adj_plot_list, paste0(dropboxDir,"results/stress-growth-models/figure-objects/H1_adj_splines.RDS"))
 
 #Save plot data
-saveRDS(H3_adj_plot_data, here("figure-data/H3_adj_spline.data.RDS"))
+saveRDS(H3_adj_plot_data, ("./figure-data/H3_whz_adj_spline.data.RDS"))
 
 ## Hypothesis 4
 # Maternal estriol is positively associated with child growth.
 # X: maternal plasma estriol  - first & second trimester of pregnancy
 # Y: child LAZ at 3, 14, 28 months, stunting 
 Xvars <- c("ln_preg_estri")
-Yvars <- c("laz_t1", "laz_t2", "laz_t3")
+Yvars <- c("whz_t1", "whz_t2", "whz_t3")
 
 #Fit models
 H4_adj_models <- NULL
@@ -249,11 +248,11 @@ for(i in 1:nrow(H4_adj_models)){
 #saveRDS(H1_adj_models, paste0(dropboxDir,"results/stress-growth-models/models/H1_adj_models.RDS"))
 
 #Save results
-saveRDS(H4_adj_res, here("results/adjusted/H4_adj_res.RDS"))
+saveRDS(H4_adj_res, ("./results/adjusted/H4_whz_adj_res.RDS"))
 
 
 #Save plots
 #saveRDS(H1_adj_plot_list, paste0(dropboxDir,"results/stress-growth-models/figure-objects/H1_adj_splines.RDS"))
 
 #Save plot data
-saveRDS(H4_adj_plot_data, here("figure-data/H4_adj_spline.data.RDS"))
+saveRDS(H4_adj_plot_data, ("./figure-data/H4_whz_adj_spline.data.RDS"))

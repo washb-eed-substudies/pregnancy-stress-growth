@@ -72,7 +72,7 @@ table(H4_quartiles$X)
 #-------------------------------------------------------------------------------
 
 plotdf2 <- bind_rows(H1_quartiles, H4_quartiles) %>% 
-  mutate(x=factor(X, levels=c("ln_preg_estri","ln_preg_cort"), 
+  mutate(x=factor(X, levels=c("ln_preg_cort","ln_preg_estri"), 
                   labels=c("Log-Maternal Plasma Cortisol", "Log-Maternal Plasma Estriol")),
          y=case_when(grepl("t1",Y) ~ "3 Months",
                      grepl("t2",Y) ~ "14 Months",

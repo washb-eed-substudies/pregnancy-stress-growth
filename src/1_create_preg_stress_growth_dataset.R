@@ -1,7 +1,7 @@
 
 rm(list=ls())
 
-#source(here::here("0_config.R"))
+source(here::here("0_config.R"))
 
 #library(boxr)
 #box_auth()
@@ -35,7 +35,18 @@ names(d)
 #drop Z-score, sd, and ratio measures
 d <- d[,!(grepl("^(z_)",colnames(d)) | grepl("^(sd_)",colnames(d)))]
 
+############# Fix implausible/offset time of sampling measures so they occur during sampling hours################
 
+d$time_of_day_cort_implausible <- d$time_of_day_cort_cont
+
+summary(d$time_of_day_cort_cont)
+plot(hist(d$time_of_day_cort_cont))
+
+d$time_of_day_cort_cont <- ifelse(d$time_of_day_cort_cont >18, d$time_of_day_cort_cont-12, d$time_of_day_cort_cont)
+d$time_of_day_cort_cont <- ifelse(d$time_of_day_cort_cont<6 , d$time_of_day_cort_cont+12, d$time_of_day_cort_cont)
+plot(hist(d$time_of_day_cort_cont))
+
+table(d$time_of_day_cort_cont)
 
 ############# Check covariate missingness ###################
 # a few exposures and outcomes

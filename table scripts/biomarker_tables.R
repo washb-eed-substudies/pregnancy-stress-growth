@@ -1,43 +1,42 @@
-rm(list=ls())
 library(data.table)
 library(tidyverse)
 
 # source(here::here("0-config.R"))
-source(here::here("C:/Users/Classof2020ChenBelin/pregnancy-stress-growth/table scripts/table-functions.R"))
+source(here::here("./table scripts/table-functions.R"))
 
 # load enrollment characteristics and results
-H1 <- readRDS(file = 'C:/Users/Classof2020ChenBelin/pregnancy-stress-growth/results/unadjusted/H1_res.RDS')
-H1b <- readRDS(file = 'C:/Users/Classof2020ChenBelin/pregnancy-stress-growth/results/unadjusted/H1_whz_res.RDS')
-H1c <- readRDS(file = 'C:/Users/Classof2020ChenBelin/pregnancy-stress-growth/results/unadjusted/H1_igf_res.RDS')
+H1 <- readRDS(file = './results/unadjusted/H1_res.RDS')
+H1b <- readRDS(file = './results/unadjusted/H1_whz_res.RDS')
+H1c <- readRDS(file = './results/unadjusted/H1_igf_res.RDS')
 
-H2 <- readRDS(file = 'C:/Users/Classof2020ChenBelin/pregnancy-stress-growth/results/unadjusted/H2_res.RDS')
-H2b <- readRDS(file = 'C:/Users/Classof2020ChenBelin/pregnancy-stress-growth/results/unadjusted/H2_whz_res.RDS')
-H2c <- readRDS(file = 'C:/Users/Classof2020ChenBelin/pregnancy-stress-growth/results/unadjusted/H2_igf_res.RDS')
+H2 <- readRDS(file = './results/unadjusted/H2_res.RDS')
+H2b <- readRDS(file = './results/unadjusted/H2_whz_res.RDS')
+H2c <- readRDS(file = './results/unadjusted/H2_igf_res.RDS')
 
-H3 <- readRDS(file = ('C:/Users/Classof2020ChenBelin/pregnancy-stress-growth/results/unadjusted/H3_res.RDS'))
-H3b <- readRDS(file = 'C:/Users/Classof2020ChenBelin/pregnancy-stress-growth/results/unadjusted/H3_whz_res.RDS')
-H3c <- readRDS(file = 'C:/Users/Classof2020ChenBelin/pregnancy-stress-growth/results/unadjusted/H3_igf_res.RDS')
+H3 <- readRDS(file = ('./results/unadjusted/H3_res.RDS'))
+H3b <- readRDS(file = './results/unadjusted/H3_whz_res.RDS')
+H3c <- readRDS(file = './results/unadjusted/H3_igf_res.RDS')
 
-H4 <- readRDS(file = ("C:/Users/Classof2020ChenBelin/pregnancy-stress-growth/results/unadjusted/H4_res.RDS"))
-H4b <- readRDS(file = 'C:/Users/Classof2020ChenBelin/pregnancy-stress-growth/results/unadjusted/H4_whz_res.RDS')
-H4c <- readRDS(file = 'C:/Users/Classof2020ChenBelin/pregnancy-stress-growth/results/unadjusted/H4_igf_res.RDS')
+H4 <- readRDS(file = ("./results/unadjusted/H4_res.RDS"))
+H4b <- readRDS(file = './results/unadjusted/H4_whz_res.RDS')
+H4c <- readRDS(file = './results/unadjusted/H4_igf_res.RDS')
 
-H1adj <- readRDS(file = ('C:/Users/Classof2020ChenBelin/pregnancy-stress-growth/results/adjusted/H1_adj_res.RDS'))
-H1badj <- readRDS(file = ('C:/Users/Classof2020ChenBelin/pregnancy-stress-growth/results/adjusted/H1_whz_adj_res.RDS'))
-H1cadj <- readRDS(file = ('C:/Users/Classof2020ChenBelin/pregnancy-stress-growth/results/adjusted/H1_igf_adj_res.RDS'))
+H1adj <- readRDS(file = ('./results/adjusted/H1_adj_res.RDS'))
+H1badj <- readRDS(file = ('./results/adjusted/H1_whz_adj_res.RDS'))
+H1cadj <- readRDS(file = ('./results/adjusted/H1_igf_adj_res.RDS'))
 
 
-H2adj <- readRDS(file=('C:/Users/Classof2020ChenBelin/pregnancy-stress-growth/results/adjusted/H2_adj_res.RDS'))
-H2badj <- readRDS(file = ('C:/Users/Classof2020ChenBelin/pregnancy-stress-growth/results/adjusted/H2_whz_adj_res.RDS'))
-H2cadj <- readRDS(file = ('C:/Users/Classof2020ChenBelin/pregnancy-stress-growth/results/adjusted/H2_igf_adj_res.RDS'))
+H2adj <- readRDS(file=('./results/adjusted/H2_adj_res.RDS'))
+H2badj <- readRDS(file = ('./results/adjusted/H2_whz_adj_res.RDS'))
+H2cadj <- readRDS(file = ('./results/adjusted/H2_igf_adj_res.RDS'))
 
-H3adj <- readRDS(file=('C:/Users/Classof2020ChenBelin/pregnancy-stress-growth/results/adjusted/H3_adj_res.RDS'))
-H3badj <- readRDS(file = ('C:/Users/Classof2020ChenBelin/pregnancy-stress-growth/results/adjusted/H3_whz_adj_res.RDS'))
-H3cadj <- readRDS(file = ('C:/Users/Classof2020ChenBelin/pregnancy-stress-growth/results/adjusted/H3_igf_adj_res.RDS'))
+H3adj <- readRDS(file=('./results/adjusted/H3_adj_res.RDS'))
+H3badj <- readRDS(file = ('./results/adjusted/H3_whz_adj_res.RDS'))
+H3cadj <- readRDS(file = ('./results/adjusted/H3_igf_adj_res.RDS'))
 
-H4adj <- readRDS(file=('C:/Users/Classof2020ChenBelin/pregnancy-stress-growth/results/adjusted/H4_adj_res.RDS'))
-H4badj <- readRDS(file = ('C:/Users/Classof2020ChenBelin/pregnancy-stress-growth/results/adjusted/H4_whz_adj_res.RDS'))
-H4cadj <- readRDS(file = ('C:/Users/Classof2020ChenBelin/pregnancy-stress-growth/results/adjusted/H4_igf_adj_res.RDS'))
+H4adj <- readRDS(file=('./results/adjusted/H4_adj_res.RDS'))
+H4badj <- readRDS(file = ('./results/adjusted/H4_whz_adj_res.RDS'))
+H4cadj <- readRDS(file = ('./results/adjusted/H4_igf_adj_res.RDS'))
 
 
 full_res <- bind_rows(H1, H1b, H1c, H2, H2b, H2c, H3, H3b, H3c, H4, H4b, H4c)
@@ -119,14 +118,14 @@ save_as_docx("Table 5: Maternal Micronutrients and Child Growth Status" = tbl2fl
              "Table 3: Maternal Plasma Cortisol and Child Growth Status" = tbl3flex,
              "Table 2: Maternal Estriol and Child Growth Status" = tbl4flex,
              "Table 4: Maternal Inflammation and Child Growth Status" = tbl5flex,
-             path='C:/Users/Classof2020ChenBelin/pregnancy-stress-growth/tables/pregnancy-stress.docx',
+             path='./tables/pregnancy-stress.docx',
              pr_section = sect_properties) 
 
 # save_as_docx("Table 4: Maternal Micronutrients and Child Immune Status" = tbl2flexsupp, 
 #              "Table 2: Maternal Cortisol and Child Immune Status" = tbl3flexsupp, 
 #              "Table 5: Maternal Estriol and Child Immune Status" = tbl4flexsupp, 
 #              "Table 3: Maternal Immune Status and Child Immune Status" = tbl5flexsupp,
-#              path='C:/Users/Classof2020ChenBelin/pregnancy-stress-growth/tables/pregnancy-stress-supp-tables.docx',
+#              path='./tables/pregnancy-stress-supp-tables.docx',
 #              pr_section = sect_properties)
 
 #-----------------------------------------------
@@ -189,3 +188,26 @@ write.csv(BH_tbl2, ('./tables/pregnancy-stress-H3-BH.csv'))
 write.csv(BH_tbl3, ('./tables/pregnancy-stress-H1-BH.csv'))
 write.csv(BH_tbl4, ('./tables/pregnancy-stress-H4-BH.csv'))
 write.csv(BH_tbl5, ('./tables/pregnancy-stress-H2-BH.csv'))
+
+#making sure all column names are unique 
+colnames(BH_tbl2) <- make.unique(colnames(BH_tbl2))
+colnames(BH_tbl3) <- make.unique(colnames(BH_tbl3))
+colnames(BH_tbl4) <- make.unique(colnames(BH_tbl4))
+colnames(BH_tbl5) <- make.unique(colnames(BH_tbl5))
+
+#create word doc 
+doc <- read_docx()
+
+# Add each table to the document
+doc <- doc %>%
+  body_add_flextable(flextable(BH_tbl2)) %>%
+  body_add_par("Table: H3 BH Adjusted P-values", style = "heading 1") %>%
+  body_add_flextable(flextable(BH_tbl3)) %>%
+  body_add_par("Table: H1 BH Adjusted P-values", style = "heading 1") %>%
+  body_add_flextable(flextable(BH_tbl4)) %>%
+  body_add_par("Table: H4 BH Adjusted P-values", style = "heading 1") %>%
+  body_add_flextable(flextable(BH_tbl5)) %>%
+  body_add_par("Table: H2 BH Adjusted P-values", style = "heading 1")
+
+# Save the Word document
+print(doc, target = "./tables/pregnancy-stress-BH-tables.docx")

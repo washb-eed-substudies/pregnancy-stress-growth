@@ -486,7 +486,7 @@ hr_tbl_flex <- function(name, expo_var, out_var, exposure, outcome, results, res
     flextbl <- add_footer_row(flextbl, top=F, 
                               values = "N, 25th Percentile, and 75th Percentile are from the adjusted analyses", colwidths = 7)
     flextbl <- add_footer_row(flextbl, top=F, 
-                              values = "*P-value < 0.2 after adjusting for multiple comparisons using the Benjamini-Hochberg procedure", colwidths = 7)
+                              values = "*P-value < 0.1 after adjusting for multiple comparisons using the Benjamini-Hochberg procedure", colwidths = 7)
     flextbl <- add_footer_row(flextbl, top=F, 
                               values = "Hazard ratio could not be estimated for sitting without support since nearly all children had achieved this milestone before time of measurement", colwidths = 7)
     flextbl <- fontsize(flextbl, part = "all", size = 7)

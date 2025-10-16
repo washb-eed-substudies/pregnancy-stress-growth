@@ -1,10 +1,10 @@
 rm(list=ls())
-librqry(washbgam)
+library(washbgam)
 #source(here::here("0-config.R"))
 
 #d<-readRDS(paste0(dropboxDir, "Data/Cleaned/Audrie/pregnancy_child_immune_covariates_data.RDS"))
 
-d <- readRDS("../pregnancy_stress_growth_covariates_data.RDS")
+d <- readRDS("./pregnancy_stress_growth_covariates_data.RDS")
 #Set list of adjustment variables
 #Make vectors of adjustment variable names
 Wvars<-c("sex","birthord", "momage","momheight","momedu", 
@@ -80,14 +80,14 @@ for(i in 1:nrow(H1_adj_models)){
 #saveRDS(H1_adj_models, paste0(dropboxDir,"results/stress-growth-models/models/H1_adj_models.RDS"))
 
 #Save results
-saveRDS(H1_adj_res, ("../results/adjusted/H1_adj_res.RDS"))
+saveRDS(H1_adj_res, ("./results/adjusted/H1_adj_res.RDS"))
 
 
 #Save plots
 #saveRDS(H1_adj_plot_list, paste0(dropboxDir,"results/stress-growth-models/figure-objects/H1_adj_splines.RDS"))
 
 #Save plot data
-saveRDS(H1_adj_plot_data, ("../figure-data/H1_adj_spline.data.RDS"))
+saveRDS(H1_adj_plot_data, ("./figure-data/H1_adj_spline.data.RDS"))
 
 
 ## Hypothesis 2
@@ -256,5 +256,5 @@ saveRDS(H4_adj_res, here("results/adjusted/H4_adj_res.RDS"))
 #saveRDS(H1_adj_plot_list, paste0(dropboxDir,"results/stress-growth-models/figure-objects/H1_adj_splines.RDS"))
 
 #Save plot data
-saveRDS(H4_adj_plot_data, ("../figure-data/H4_adj_spline.data.RDS"))
+saveRDS(H4_adj_plot_data, ("./figure-data/H4_adj_spline.data.RDS"))
 

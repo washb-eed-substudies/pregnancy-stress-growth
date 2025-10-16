@@ -1,0 +1,8 @@
+"","name","Outcome","N","25th Percentile","75th Percentile"," Outcome, 75th Percentile v. 25th Percentile"," "," "," "," "," "," "," "," "," "
+"1"," "," "," "," "," ","Unadjusted"," "," "," "," ","Adjusted"," "," "," "," "
+"2"," "," "," "," "," ","Predicted Outcome at 25th Percentile","Predicted Outcome at 75th Percentile","Coefficient (95% CI)","P-value","FDR adjusted P-value","Predicted Outcome at 25th Percentile","Predicted Outcome at 75th Percentile","Coefficient (95% CI)","P-value","FDR adjusted P-value"
+"3","Ln Estriol (ng/mL)","Length-for-Age Z-Score 3 months","370","1.02","1.8","-1.06","-1.16","-0.11 (-0.3, 0.09)","0.28","0.28","-1.41","-1.29","0.12 (-0.04, 0.28)","0.15","0.23"
+"4","Ln Estriol (ng/mL)","Length-for-Age Z-Score 14 months","529","0.76","1.71","-1.32","-1.41","-0.09 (-0.19, 0.01)","0.07","0.11","-0.65","-0.45","0.2 (0.03, 0.36)","0.02","0.06"
+"5","Ln Estriol (ng/mL)","Ln IGF-1 14 months (ug/L)","427","0.72","1.71","38.12","37.34","-0.79 (-3.25, 1.67)","0.54",NA,"38.79","38.25","-0.53 (-3.6, 2.53)","0.75",NA
+"6","","Length-for-Age Z-Score 28 months","539","0.78","1.73","-1.39","-1.47","-0.08 (-0.17, 0.01)","0.07","0.11","-1.45","-1.44","0.01 (-0.13, 0.15)","0.87","0.87"
+"7","Ln Estriol (ng/mL)","Ln IGF-1 28 months (ug/L)","502","0.78","1.74","51.79","50.05","-1.74 (-4.01, 0.54)","0.13",NA,"53.57","50.28","-3.29 (-5.9, -0.68)","0.01",NA

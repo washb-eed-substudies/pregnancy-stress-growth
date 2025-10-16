@@ -155,4 +155,4 @@ p +
 #p
 
 # YOU MAY NEED TO CHANGE THE FILE PATHS HERE
-p %>% ggsave(filename="enrollment_char_fig.jpg", height=14, width=9)
+p %>% ggsave(filename="enrollment_char_fig.jpg", height=14, width=9, dpi=300)

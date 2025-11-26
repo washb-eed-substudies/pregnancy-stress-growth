@@ -5,13 +5,13 @@ library(tidyverse)
 library(flextable)
 library(officer)
 
-d <- readRDS("/Users/Classof2020ChenBelin/pregnancy-stress-growth/data/bangladesh-cleaned-master-data.RDS") %>% filter(.$pregnancy_stress == 1)
+d <- readRDS("./data/bangladesh-cleaned-master-data.RDS") %>% filter(.$pregnancy_stress == 1)
 
 filtering <- function(row){
   any(!is.na(row))
 }
 
-# MATERNAL PREGNANCY BIOMARKERS UNCOMMENT AND FILL IN THIS CODE (UNCOMMENT WITH CTRL+SHIFT+C ON PC)
+# MATERNAL PREGNANCY BIOMARKERS 
 exp <- c("vitD_nmol_per_L", "logFERR_inf", "logSTFR_inf", "logRBP_inf", "vit_D_def", "vit_A_def", "iron_def", "ln_preg_cort", "logCRP", "logAGP", "mom_t0_ln_ifn", "sumscore_t0_mom_Z", "ln_preg_estri") 
 out <- c("t2_ln_crp", "t2_ln_agp", "t2_ln_ifn", "sumscore_t2_Z", 
          "t3_ln_crp", "t3_ln_agp", "t3_ln_ifn","sumscore_t3_Z") 

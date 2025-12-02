@@ -2,6 +2,10 @@
 
 A reproducible analysis for studying associations between pregnancy biomarkers and child growth outcomes.  
 
+This analysis if associated with the following manuscript:
+
+Chen B, Mertens AN, Lin CH, et al. Associations Between Micronutrient Status, Hormones, and Immune Status During Pregnancy and Child Growth in Rural Bangladesh: A Prospective Cohort Study. Current Developments in Nutrition. Published online November 8, 2025:107596. doi:10.1016/j.cdnut.2025.107596
+
 ## Overview  
 
 This repository contains data processing, statistical analysis, and figure/table generation scripts in R for the WASH-EDD substudy under the WASH-Benefits Trial. 
@@ -38,7 +42,4 @@ Rscript 0_config.R
 ### Generate tables and figures
 e.g., run scripts within `table scripts/` and `figure_scripts/`
 
-### Citation
-
-Chen B, Mertens AN, Lin CH, et al. Associations Between Micronutrient Status, Hormones, and Immune Status During Pregnancy and Child Growth in Rural Bangladesh: A Prospective Cohort Study. Current Developments in Nutrition. Published online November 8, 2025:107596. doi:10.1016/j.cdnut.2025.107596
 

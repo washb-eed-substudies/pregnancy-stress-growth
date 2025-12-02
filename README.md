@@ -20,10 +20,11 @@ This repository contains data processing, statistical analysis, and figure/table
 
 To reproduce the analyses:
 
-```sh
 # Clone the repository
+```sh
 git clone https://github.com/washb-eed-substudies/pregnancy-stress-growth.git
 cd pregnancy-stress-growth
+```
 
 # Run the configuration
 Rscript 0_config.R
@@ -35,7 +36,7 @@ Rscript 0_config.R
 04 - applies Benjamini-Hochberg FDR correction for multiple timepoints
 
 # Generate tables and figures
-# e.g., run scripts within `table scripts/` and `figure_scripts/`
+e.g., run scripts within `table scripts/` and `figure_scripts/`
 
 ## Citation
 
